@@ -1,31 +1,32 @@
 package year2023
 
-fun main() {
-    val filePath = "day1.txt"
-    val digitChars = (0..9).map { it.digitToChar() }.toSet()
-    var totalCalibration = 0
+class Day1Part1 {
+    fun calculateCalibration(): Int {
 
-    filePath.asResource().forEach { line ->
-        val calibrationValue = calculateCalibrationValue(line, digitChars)
-        totalCalibration += calibrationValue
+
+        var totalCalibration = 0
+
+        DAY_ONE_FILE_NAME.asStreamOfLines().forEach { line ->
+            val calibrationValue = calculateCalibrationValue(line)
+            totalCalibration += calibrationValue
+        }
+
+        return totalCalibration
     }
 
-    println(totalCalibration)
+    private fun calculateCalibrationValue(line: String): Int {
+        val firstDigit = findFirstDigit(line)
+        val lastDigit = findLastDigit(line)
+
+        return "$firstDigit$lastDigit".toInt()
+    }
+
+    private fun findFirstDigit(line: String): Char {
+        return line.firstOrNull { DIGITS_CHARS.contains(it) } ?: throw NoSuchElementException("No digit found")
+    }
+
+    private fun findLastDigit(line: String): Char {
+        return line.lastOrNull { DIGITS_CHARS.contains(it) } ?: throw NoSuchElementException("No digit found")
+    }
 }
 
-private fun String.asResource() = { }::class.java.getResourceAsStream(this)!!.bufferedReader().lines()
-
-private fun calculateCalibrationValue(line: String, digitChars: Set<Char>): Int {
-    val firstDigit = findFirstDigit(line, digitChars)
-    val lastDigit = findLastDigit(line, digitChars)
-
-    return "$firstDigit$lastDigit".toInt()
-}
-
-private fun findFirstDigit(line: String, digitChars: Set<Char>): Char {
-    return line.firstOrNull { digitChars.contains(it) } ?: throw NoSuchElementException("No digit found")
-}
-
-private fun findLastDigit(line: String, digitChars: Set<Char>): Char {
-    return line.lastOrNull { digitChars.contains(it) } ?: throw NoSuchElementException("No digit found")
-}
