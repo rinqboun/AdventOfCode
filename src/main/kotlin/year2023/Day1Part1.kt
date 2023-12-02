@@ -2,11 +2,9 @@ package year2023
 
 class Day1Part1 {
     fun calculateCalibration(): Int {
-
-
         var totalCalibration = 0
 
-        DAY_ONE_FILE_NAME.asStreamOfLines().forEach { line ->
+        DAY_ONE_FILE_NAME.lines().forEach { line ->
             val calibrationValue = calculateCalibrationValue(line)
             totalCalibration += calibrationValue
         }
@@ -17,7 +15,6 @@ class Day1Part1 {
     private fun calculateCalibrationValue(line: String): Int {
         val firstDigit = findFirstDigit(line)
         val lastDigit = findLastDigit(line)
-
         return "$firstDigit$lastDigit".toInt()
     }
 

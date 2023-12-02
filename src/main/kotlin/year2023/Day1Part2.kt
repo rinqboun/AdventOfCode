@@ -42,7 +42,7 @@ private fun findLastDigit(line: String): String {
 
     for (digit in digits) {
         val index = line.lastIndexOf(digit)
-        if (lastIndex < index) {
+        if (index != -1 && lastIndex < index) {
             lastIndex = index
             lastDigit = digit
         }
