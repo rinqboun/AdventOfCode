@@ -3,12 +3,10 @@ package year2023
 class Day1Part1 {
     fun calculateCalibration(): Int {
         var totalCalibration = 0
-
         DAY_ONE_FILE_NAME.lines().forEach { line ->
             val calibrationValue = calculateCalibrationValue(line)
             totalCalibration += calibrationValue
         }
-
         return totalCalibration
     }
 
@@ -26,4 +24,3 @@ class Day1Part1 {
         return line.lastOrNull { DIGITS_CHARS.contains(it) } ?: throw NoSuchElementException("No digit found")
     }
 }
-

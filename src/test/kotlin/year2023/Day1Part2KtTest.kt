@@ -4,16 +4,16 @@ import org.junit.jupiter.api.Test
 
 import org.assertj.core.api.Assertions.*
 
-class Day1Part1KtTest {
+class Day1Part2KtTest {
     @Test
     fun `WHEN calculate calibration THEN sum is equal to expected value`() {
         // given
-        val day1 = Day1Part1()
+        val day1 = Day1Part2()
 
         // when
         val calibration = day1.calculateCalibration()
 
         // then
-        assertThat(calibration).isEqualTo(54573)
+        assertThat(calibration).isEqualTo(54591)
     }
 }
