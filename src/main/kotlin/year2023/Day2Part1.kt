@@ -6,26 +6,39 @@ class Day2Part1 {
         "green" to 13,
         "blue" to 14
     )
+
     fun sumOfIDs(): Int {
         var counter = 0
-        DAY_TWO_FILE_NAME.lines().forEach {
-            var gamePossible = true
-            val gameNumber = it.substringAfter("Game ").substringBefore(":").toInt()
-            val gameData = it.substringAfter(":").split(";")
-            game@ for (oneGameData in gameData) {
-                for (oneThrow in oneGameData.split(",")) {
-                    for (entry in colorToLimit) {
-                        if (oneThrow.contains(entry.key) && oneThrow.substringBefore(" ${entry.key}").trim().toInt() > entry.value) {
-                            gamePossible = false
-                            break@game
-                        }
-                    }
-                }
-            }
-            if (gamePossible) {
-                counter += gameNumber
+
+        DAY_TWO_FILE_NAME.lines().forEach { gameLine ->
+            if (isGamePossible(gameLine)) {
+                counter += extractGameNumber(gameLine)
             }
         }
+
         return counter
+    }
+
+    private fun isGamePossible(gameLine: String): Boolean {
+        val gameData = gameLine.substringAfter(":").split(";")
+
+        gameData.forEach { oneGameData ->
+            if (oneGameData.split(",").any { throwIsNotPossible(it) }) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    private fun throwIsNotPossible(oneThrow: String): Boolean {
+        return colorToLimit.any { entry ->
+            oneThrow.contains(entry.key) &&
+                    oneThrow.substringBefore(" ${entry.key}").trim().toInt() > entry.value
+        }
+    }
+
+    private fun extractGameNumber(gameLine: String): Int {
+        return gameLine.substringAfter("Game ").substringBefore(":").toInt()
     }
 }
